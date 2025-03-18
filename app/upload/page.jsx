@@ -16,12 +16,34 @@ export default function UploadPage() {
 
   // Sample list of 27 categories - replace with your actual categories
   const categories = [
-    'Art', 'Automotive', 'Business', 'Crafts', 'Design', 
-    'Education', 'Entertainment', 'Fashion', 'Food', 'Gaming',
-    'Health', 'Holidays', 'Home', 'Lifestyle', 'Music',
-    'Nature', 'Pets', 'Photography', 'Science', 'Sports',
-    'Technology', 'Travel', 'Wedding', 'Wildlife', 'Work',
-    'Architecture', 'Events'
+    'EUR/USD ',
+'USD/JPY ',
+'GBP/USD ',
+'USD/CHF ',
+'AUD/USD ',
+'USD/CAD ',
+'NZD/USD ',
+'EUR/GBP ',
+'EUR/JPY ',
+'EUR/CHF ',
+'EUR/AUD ',
+'EUR/CAD ',
+'GBP/JPY ',
+'GBP/CHF ',
+'GBP/AUD ',
+'GBP/CAD ',
+'AUD/JPY ',
+'AUD/CHF ',
+'AUD/CAD ',
+'NZD/JPY ',
+'NZD/CHF ',
+'NZD/CAD ',
+'USD/TRY ',
+'USD/ZAR ',
+'USD/MXN ',
+'EUR/TRY ',
+'GBP/TRY ',
+
   ];
 
   const filteredCategories = categories.filter(cat => 
@@ -93,7 +115,7 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mt-16">
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mt-16 text-black">
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <div className="bg-blue-600 px-6 py-4">
           <h1 className="text-white text-xl font-semibold">Upload Image</h1>
@@ -167,7 +189,7 @@ export default function UploadPage() {
               <div className="relative">
                 <input
                   type="text"
-                  className="w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full p-3 bg-white text-black border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder={category || "Search for a category..."}
                   value={searchTerm}
                   onChange={(e) => {
@@ -186,7 +208,7 @@ export default function UploadPage() {
                 </div>
 
                 {isDropdownOpen && (
-                  <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto">
+                  <div className="text-black absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto">
                     {filteredCategories.length > 0 ? (
                       filteredCategories.map((cat, index) => (
                         <div
