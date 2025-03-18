@@ -120,6 +120,10 @@ export default function ProfilePage() {
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
                     500+ Students Mentored
                   </li>
+                   <li className="flex items-center">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                   Building Expert Advisor
+                  </li>
                 </ul>
               </div>
             </div>
@@ -127,11 +131,15 @@ export default function ProfilePage() {
             {/* Details (Right Side) */}
             <div className="flex-1">
               <h1 className="text-4xl font-bold text-gray-800 mb-2">{profile.name}</h1>
-              <h2 className="text-2xl font-medium text-blue-600 mb-6">{profile.title}</h2>
-              <p className="text-lg leading-relaxed text-gray-700 mb-8">{profile.bio}</p>
-              
+              <h2 className="text-2xl font-semibold text-blue-600 mb-6">Senior Forex Trader,<span className="text-red-600">Trainer</span>  and Building expert Advisor</h2>
+              <p className="text-lg leading-relaxed text-gray-700 mb-4">{profile.bio}</p>
+              <div>
+                <h3 className="text-xl font-medium text-gray-800 mb-3">Contact</h3>
+                <p className="text-gray-600 my-2">Email: {profile.contact.email}</p>
+                <p className="text-gray-600 my-2">Phone: {profile.contact.Phone}</p>
+              </div>
               <div className="mb-8">
-                <h3 className="text-xl font-medium text-gray-800 mb-3">Expertise</h3>
+                <h3 className="text-xl font-medium text-gray-800 mb-3 mt-4">Expertise</h3>
                 <div className="flex flex-wrap gap-2">
                   {profile.skills.map((skill, index) => (
                     <span key={index} className="bg-blue-50 text-blue-700 px-3 py-1.5 rounded-md text-sm">
@@ -150,11 +158,7 @@ export default function ProfilePage() {
                 </p>
               </div>
               
-              <div>
-                <h3 className="text-xl font-medium text-gray-800 mb-3">Contact</h3>
-                <p className="text-gray-600 my-2">Email: {profile.contact.email}</p>
-                <p className="text-gray-600 my-2">Phone: {profile.contact.Phone}</p>
-              </div>
+              
             </div>
           </section>
 
