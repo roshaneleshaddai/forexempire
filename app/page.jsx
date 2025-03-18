@@ -144,7 +144,7 @@ export default function ProfilePage() {
             <div className="flex-1">
               <h1 className="text-4xl font-bold text-gray-800 mb-2">{profile.name}</h1>
               <h2 className="text-2xl font-semibold text-blue-600 mb-6">Senior Forex Trader,<span className="text-red-600">Trainer </span> and Building Expert Advisor</h2>
-              <p className="text-lg leading-relaxed text-gray-700 mb-8">{profile.bio}</p>
+              <p className="text-lg leading-relaxed text-gray-700 mb-4">{profile.bio}</p>
                 <div>
                 <h3 className="text-xl font-medium text-gray-800 mb-3">Contact</h3>
                 <p className="text-gray-600 my-2">Email: {profile.contact.email}</p>
@@ -152,7 +152,7 @@ export default function ProfilePage() {
               </div>
               
               <div className="mb-8">
-                <h3 className="text-xl font-medium text-gray-800 mb-3">Expertise</h3>
+                <h3 className="text-xl font-medium text-gray-800 mb-3 mt-3">Expertise</h3>
                 <div className="flex flex-wrap gap-2">
                   {profile.skills.map((skill, index) => (
                     <span key={index} className="bg-blue-50 text-blue-700 px-3 py-1.5 rounded-md text-sm">
