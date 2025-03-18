@@ -132,6 +132,10 @@ export default function ProfilePage() {
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
                     500+ Students Mentored
                   </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                     Building Expert Advisor
+                  </li>
                 </ul>
               </div>
             </div>
@@ -139,7 +143,7 @@ export default function ProfilePage() {
             {/* Details (Right Side) */}
             <div className="flex-1">
               <h1 className="text-4xl font-bold text-gray-800 mb-2">{profile.name}</h1>
-              <h2 className="text-2xl font-medium text-blue-600 mb-6">{profile.title}</h2>
+              <h2 className="text-2xl font-medium text-blue-600 mb-6">Senior Forex Trader,<span className="text-red-500">Trainer </span> and Building Expert Advisor</h2>
               <p className="text-lg leading-relaxed text-gray-700 mb-8">{profile.bio}</p>
               
               <div className="mb-8">
