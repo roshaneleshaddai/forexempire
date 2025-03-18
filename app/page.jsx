@@ -190,16 +190,16 @@ export default function ProfilePage() {
                         {group.images.map((image, index) => (
                           <div 
                             key={image._id || index} 
-                            className={`flex-shrink-0 w-64 rounded-lg overflow-hidden shadow-md transition-all duration-300 cursor-pointer ${
+                            className={`w-64 rounded-lg overflow-hidden shadow-md transition-all duration-300 cursor-pointer ${
                               (activeIndices[group.title] || 0) === index ? 'transform -translate-y-1 shadow-lg' : ''
                             }`}
                             onClick={() => scrollToImage(group.title, index)}
                           >
-                            <div className="relative h-64 overflow-hidden">
+                            <div className="relative  overflow-hidden">
                               <img
                                 src={image.imageUrl}
                                 alt={`${group.title} image ${index + 1}`}
-                                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                className="  transition-transform duration-300 hover:scale-105"
                               />
                             </div>
                             <div className="p-3 bg-white">
