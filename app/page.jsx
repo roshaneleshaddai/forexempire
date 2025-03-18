@@ -164,7 +164,7 @@ export default function ProfilePage() {
 
           {/* API Image Gallery */}
           <section className="w-full bg-white rounded-xl shadow-md p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Image Gallery</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Trade History</h2>
             
             {isLoading ? (
               <div className="flex justify-center items-center py-12">
