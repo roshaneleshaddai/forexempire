@@ -1,13 +1,14 @@
-'use client'
+'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 
 export default function ProfilePage() {
   // Forex trainer profile data
   const profile = {
     name: "Dr.AshHoCk",
-    title: "Senior Forex Trader, Trainer and Building Expert Advisor",
+    title: "Senior Forex Trader & Instructor",
     bio: "Professional forex trader with over 10 years of experience in the financial markets. Specializing in technical analysis, risk management, and developing profitable trading strategies. Helped over 500 students become confident and successful traders.",
     skills: ["Technical Analysis", "Price Action", "Risk Management", "Swing Trading", "Market Psychology", "Fundamental Analysis"],
     contact: {
@@ -16,73 +17,60 @@ export default function ProfilePage() {
     }
   };
 
-  // All trading images
-  const allImages = [
-    { id: 1, src: "/images/USDJPY1.jpg", alt: "USD/JPY Trade", title: "USD/JPY" },
-    { id: 2, src: "/images/USDJPY2.jpg", alt: "USD/JPY Trade", title: "USD/JPY" },
-    { id: 3, src: "/images/USDJPY3.jpg", alt: "USD/JPY Trade", title: "USD/JPY" },
-    { id: 4, src: "/images/USDJPY4.jpg", alt: "USD/JPY Trade", title: "USD/JPY" },
-    { id: 5, src: "/images/USDJPY5.jpg", alt: "USD/JPY Trade", title: "USD/JPY" },
-    { id: 6, src: "/images/USDJPY6.jpg", alt: "USD/JPY Trade", title: "USD/JPY" },
-    { id: 7, src: "/images/USDJPY7.jpg", alt: "USD/JPY Trade", title: "USD/JPY" },
-    { id: 8, src: "/images/AUDJPY1.jpg", alt: "AUD/JPY Trade", title: "AUD/JPY" },
-    { id: 9, src: "/images/AUDJPY2.jpg", alt: "AUD/JPY Trade", title: "AUD/JPY" },
-    { id: 10, src: "/images/CADJPY1.jpg", alt: "CAD/JPY Trade", title: "CAD/JPY" },
-    { id: 11, src: "/images/GBPAUD1.jpg", alt: "GBP/AUD Trade", title: "GBP/AUD" },
-    { id: 12, src: "/images/GBPAUD2.jpg", alt: "GBP/AUD Trade", title: "GBP/AUD" },
-    { id: 13, src: "/images/GBPAUD3.jpg", alt: "GBP/AUD Trade", title: "GBP/AUD" },
-    { id: 14, src: "/images/USDCAD1.jpg", alt: "USD/CAD Trade", title: "USD/CAD" },
-    { id: 15, src: "/images/USDCAD2.jpg", alt: "USD/CAD Trade", title: "USD/CAD" },
-    { id: 16, src: "/images/USDCAD3.jpg", alt: "USD/CAD Trade", title: "USD/CAD" },
-    { id: 17, src: "/images/EURUSD1.jpg", alt: "EUR/USD Trade", title: "EUR/USD" },
-    { id: 18, src: "/images/AUDCHF1.jpg", alt: "AUD/CHF Trade", title: "AUD/CHF" },
-    { id: 19, src: "/images/GBPJPY1.jpg", alt: "GBP/JPY Trade", title: "GBP/JPY" },
-    { id: 20, src: "/images/GBPJPY2.jpg", alt: "GBP/JPY Trade", title: "GBP/JPY" },
-    { id: 21, src: "/images/GBPJPY3.jpg", alt: "GBP/JPY Trade", title: "GBP/JPY" },
-    { id: 22, src: "/images/GBPJPY4.jpg", alt: "GBP/JPY Trade", title: "GBP/JPY" },
-    { id: 23, src: "/images/GBPJPY5.jpg", alt: "GBP/JPY Trade", title: "GBP/JPY" },
-    { id: 24, src: "/images/CHFJPY1.jpg", alt: "CHF/JPY Trade", title: "CHF/JPY" },
-    { id: 25, src: "/images/CHFJPY2.jpg", alt: "CHF/JPY Trade", title: "CHF/JPY" },
-    { id: 26, src: "/images/CHFJPY3.jpg", alt: "CHF/JPY Trade", title: "CHF/JPY" },
-    { id: 27, src: "/images/CHFJPY4.jpg", alt: "CHF/JPY Trade", title: "CHF/JPY" },
-    { id: 28, src: "/images/EURJPY1.jpg", alt: "EUR/JPY Trade", title: "EUR/JPY" },
-    { id: 29, src: "/images/EURJPY2.jpg", alt: "EUR/JPY Trade", title: "EUR/JPY" },
-    { id: 30, src: "/images/EURJPY3.jpg", alt: "EUR/JPY Trade", title: "EUR/JPY" },
-    { id: 31, src: "/images/EURJPY4.jpg", alt: "EUR/JPY Trade", title: "EUR/JPY" },
-    { id: 32, src: "/images/EURJPY5.jpg", alt: "EUR/JPY Trade", title: "EUR/JPY" },
-    { id: 33, src: "/images/EURJPY6.jpg", alt: "EUR/JPY Trade", title: "EUR/JPY" },
-    { id: 34, src: "/images/EURJPY7.jpg", alt: "EUR/JPY Trade", title: "EUR/JPY" },
-    { id: 35, src: "/images/USDCHF1.jpg", alt: "USD/CHF Trade", title: "USD/CHF" },
-    { id: 36, src: "/images/GBPJPYm1.jpg", alt: "GBP/JPYm Trade", title: "GBP/JPYm" },
-    { id: 37, src: "/images/CHFJPYm1.jpg", alt: "CHF/JPYm Trade", title: "CHF/JPYm" },
-  ];
-
-  // Group images by title
-  const groupedImages = {};
-  allImages.forEach(image => {
-    if (!groupedImages[image.title]) {
-      groupedImages[image.title] = [];
-    }
-    groupedImages[image.title].push(image);
-  });
-
-  // Convert to array of groups
-  const imageGroups = Object.keys(groupedImages).map(title => ({
-    title,
-    images: groupedImages[title]
-  }));
-
-  // State for each group's active image
-  const [activeIndices, setActiveIndices] = useState(
-    Object.keys(groupedImages).reduce((acc, title) => {
-      acc[title] = 0;
-      return acc;
-    }, {})
-  );
-
+  // State for API images
+  const [apiImages, setApiImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
   // Refs for each scroller
   const scrollerRefs = useRef({});
+  
+  // State for each group's active image
+  const [activeIndices, setActiveIndices] = useState({});
 
+  // Fetch images from database
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get('/api/images');
+        setApiImages(response.data);
+        
+        // Initialize active indices for each category
+        const groupedImages = groupImagesByCategory(response.data);
+        const initialActiveIndices = Object.keys(groupedImages).reduce((acc, cat) => {
+          acc[cat] = 0;
+          return acc;
+        }, {});
+        
+        setActiveIndices(initialActiveIndices);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch images:', error);
+        setIsLoading(false);
+      }
+    };
+    
+    fetchImages();
+  }, []);
+
+  // Group images by category
+  const groupImagesByCategory = (imageList) => {
+    const grouped = {};
+    imageList.forEach(img => {
+      if (!grouped[img.category]) {
+        grouped[img.category] = [];
+      }
+      grouped[img.category].push(img);
+    });
+    return grouped;
+  };
+  
+  // Convert to array of groups
+  const imageGroups = Object.entries(groupImagesByCategory(apiImages)).map(([title, images]) => ({
+    title,
+    images
+  }));
+  
   // Function to scroll to a specific image in a group
   const scrollToImage = (title, index) => {
     setActiveIndices(prev => ({
@@ -112,7 +100,7 @@ export default function ProfilePage() {
                   alt={profile.name}
                   width={250}
                   height={200}
-                  className="rounded  transition-transform duration-300 hover:scale-105 shadow-lg "  
+                  className="rounded transition-transform duration-300 hover:scale-105 shadow-lg"  
                 />
               </div>
               
@@ -132,10 +120,6 @@ export default function ProfilePage() {
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
                     500+ Students Mentored
                   </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                     Building Expert Advisor
-                  </li>
                 </ul>
               </div>
             </div>
@@ -143,16 +127,11 @@ export default function ProfilePage() {
             {/* Details (Right Side) */}
             <div className="flex-1">
               <h1 className="text-4xl font-bold text-gray-800 mb-2">{profile.name}</h1>
-              <h2 className="text-2xl font-semibold text-blue-600 mb-6">Senior Forex Trader,<span className="text-red-600">Trainer </span> and Building Expert Advisor</h2>
-              <p className="text-lg leading-relaxed text-gray-700 mb-4">{profile.bio}</p>
-                <div>
-                <h3 className="text-xl font-medium text-gray-800 mb-3">Contact</h3>
-                <p className="text-gray-600 my-2">Email: {profile.contact.email}</p>
-                <p className="text-gray-600 my-2">Phone: {profile.contact.Phone}</p>
-              </div>
+              <h2 className="text-2xl font-medium text-blue-600 mb-6">{profile.title}</h2>
+              <p className="text-lg leading-relaxed text-gray-700 mb-8">{profile.bio}</p>
               
               <div className="mb-8">
-                <h3 className="text-xl font-medium text-gray-800 mb-3 mt-3">Expertise</h3>
+                <h3 className="text-xl font-medium text-gray-800 mb-3">Expertise</h3>
                 <div className="flex flex-wrap gap-2">
                   {profile.skills.map((skill, index) => (
                     <span key={index} className="bg-blue-50 text-blue-700 px-3 py-1.5 rounded-md text-sm">
@@ -171,67 +150,87 @@ export default function ProfilePage() {
                 </p>
               </div>
               
-            
+              <div>
+                <h3 className="text-xl font-medium text-gray-800 mb-3">Contact</h3>
+                <p className="text-gray-600 my-2">Email: {profile.contact.email}</p>
+                <p className="text-gray-600 my-2">Phone: {profile.contact.Phone}</p>
+              </div>
             </div>
           </section>
 
-          {/* Trade History Sections */}
+          {/* API Image Gallery */}
           <section className="w-full bg-white rounded-xl shadow-md p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Trade History</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Image Gallery</h2>
             
-            <div className="flex flex-col gap-12">
-              {imageGroups.map((group) => (
-                <div key={group.title} className="w-full">
-                  <h3 className="text-xl font-bold text-blue-700 mb-4 pb-2 border-b border-gray-200">
-                    {group.title}
-                  </h3>
-                  
-                  <div className="relative w-full overflow-hidden">
-                    <div 
-                      ref={el => scrollerRefs.current[group.title] = el}
-                      className="flex gap-6 overflow-x-auto pb-4 snap-x"
-                      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                    >
-                      {group.images.map((image, index) => (
-                        <div 
-                          key={image.id} 
-                          className={`flex-shrink-0 w-64 rounded-lg overflow-hidden shadow-md transition-all duration-300 cursor-pointer ${
-                            activeIndices[group.title] === index ? 'transform -translate-y-1 shadow-lg' : ''
-                          }`}
-                          onClick={() => scrollToImage(group.title, index)}
-                        >
-                          <div className="relative h-86 overflow-hidden">
-                            <Image
-                              src={image.src}
-                              alt={image.alt}
-                              width={250}
-                              height={320}
-                              className="w-full h-full  transition-transform duration-300 hover:scale-105"
-                            />
+            {isLoading ? (
+              <div className="flex justify-center items-center py-12">
+                <svg className="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </div>
+            ) : imageGroups.length === 0 ? (
+              <div className="text-center py-12 text-gray-500">
+                No images found.
+              </div>
+            ) : (
+              <div className="flex flex-col gap-12">
+                {imageGroups.map((group) => (
+                  <div key={group.title} className="w-full">
+                    <h3 className="text-xl font-bold text-blue-700 mb-4 pb-2 border-b border-gray-200">
+                      {group.title}
+                    </h3>
+                    
+                    <div className="relative w-full overflow-hidden">
+                      <div 
+                        ref={el => scrollerRefs.current[group.title] = el}
+                        className="flex gap-6 overflow-x-auto pb-4 snap-x"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                      >
+                        {group.images.map((image, index) => (
+                          <div 
+                            key={image._id || index} 
+                            className={`flex-shrink-0 w-64 rounded-lg overflow-hidden shadow-md transition-all duration-300 cursor-pointer ${
+                              (activeIndices[group.title] || 0) === index ? 'transform -translate-y-1 shadow-lg' : ''
+                            }`}
+                            onClick={() => scrollToImage(group.title, index)}
+                          >
+                            <div className="relative h-64 overflow-hidden">
+                              <img
+                                src={image.imageUrl}
+                                alt={`${group.title} image ${index + 1}`}
+                                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                              />
+                            </div>
+                            <div className="p-3 bg-white">
+                              <p className="text-sm text-gray-500">
+                                {new Date(image.date.$date || image.date).toLocaleDateString()}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
+                    
+                    {/* Navigation dots */}
+                    {group.images.length > 1 && (
+                      <div className="flex justify-center gap-2 mt-4">
+                        {group.images.map((_, index) => (
+                          <button
+                            key={index}
+                            className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                              (activeIndices[group.title] || 0) === index ? 'bg-blue-600' : 'bg-gray-300'
+                            }`}
+                            onClick={() => scrollToImage(group.title, index)}
+                            aria-label={`View ${group.title} image ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
-                  
-                  {/* Navigation dots */}
-                  {group.images.length > 1 && (
-                    <div className="flex justify-center gap-2 mt-4">
-                      {group.images.map((_, index) => (
-                        <button
-                          key={index}
-                          className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                            activeIndices[group.title] === index ? 'bg-blue-600' : 'bg-gray-300'
-                          }`}
-                          onClick={() => scrollToImage(group.title, index)}
-                          aria-label={`View ${group.title} image ${index + 1}`}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </section>
         </main>
       </div>
