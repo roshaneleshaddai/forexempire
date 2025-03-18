@@ -7,7 +7,7 @@ export default function ProfilePage() {
   // Forex trainer profile data
   const profile = {
     name: "Dr.AshHoCk",
-    title: "Senior Forex Trader, Trainer and building Expert Advisor",
+    title: "Senior Forex Trader, Trainer and Building Expert Advisor",
     bio: "Professional forex trader with over 10 years of experience in the financial markets. Specializing in technical analysis, risk management, and developing profitable trading strategies. Helped over 500 students become confident and successful traders.",
     skills: ["Technical Analysis", "Price Action", "Risk Management", "Swing Trading", "Market Psychology", "Fundamental Analysis"],
     contact: {
