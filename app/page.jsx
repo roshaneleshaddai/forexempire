@@ -194,7 +194,7 @@ export default function ProfilePage() {
                         {group.images.map((image, index) => (
                           <div 
                             key={image._id || index} 
-                            className={`w-64 rounded-lg overflow-hidden shadow-md transition-all duration-300 cursor-pointer ${
+                            className={`flex-shrink-0 w-64 rounded-lg overflow-hidden shadow-md transition-all duration-300 cursor-pointer ${
                               (activeIndices[group.title] || 0) === index ? 'transform -translate-y-1 shadow-lg' : ''
                             }`}
                             onClick={() => scrollToImage(group.title, index)}
@@ -203,7 +203,7 @@ export default function ProfilePage() {
                               <img
                                 src={image.imageUrl}
                                 alt={`${group.title} image ${index + 1}`}
-                                className="  transition-transform duration-300 hover:scale-105"
+                                className=" 8 transition-transform duration-300 hover:scale-105"
                               />
                             </div>
                             <div className="p-3 bg-white">
@@ -231,6 +231,10 @@ export default function ProfilePage() {
                         ))}
                       </div>
                     )}
+                  </div>
+                ))}
+              </div>
+            )}
                   </div>
                 ))}
               </div>
