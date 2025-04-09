@@ -1,10 +1,7 @@
 'use client';
-'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';``
 import Image from 'next/image';
-import axios from 'axios';
 import axios from 'axios';
 
 export default function ProfilePage() {
@@ -20,6 +17,7 @@ export default function ProfilePage() {
     }
   };
 
+  
   // State for API images
   const [apiImages, setApiImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,53 +53,7 @@ export default function ProfilePage() {
     
     fetchImages();
   }, []);
-  // State for API images
-  const [apiImages, setApiImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  
-  // Refs for each scroller
-  const scrollerRefs = useRef({});
-  
-  // State for each group's active image
-  const [activeIndices, setActiveIndices] = useState({});
 
-  // Fetch images from database
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get('/api/images');
-        setApiImages(response.data);
-        
-        // Initialize active indices for each category
-        const groupedImages = groupImagesByCategory(response.data);
-        const initialActiveIndices = Object.keys(groupedImages).reduce((acc, cat) => {
-          acc[cat] = 0;
-          return acc;
-        }, {});
-        
-        setActiveIndices(initialActiveIndices);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch images:', error);
-        setIsLoading(false);
-      }
-    };
-    
-    fetchImages();
-  }, []);
-
-  // Group images by category
-  const groupImagesByCategory = (imageList) => {
-    const grouped = {};
-    imageList.forEach(img => {
-      if (!grouped[img.category]) {
-        grouped[img.category] = [];
-      }
-      grouped[img.category].push(img);
-    });
-    return grouped;
-  };
   
   // Group images by category
   const groupImagesByCategory = (imageList) => {
@@ -115,11 +67,9 @@ export default function ProfilePage() {
     return grouped;
   };
   
-  // Convert to array of groups
-  const imageGroups = Object.entries(groupImagesByCategory(apiImages)).map(([title, images]) => ({
+
   const imageGroups = Object.entries(groupImagesByCategory(apiImages)).map(([title, images]) => ({
     title,
-    images
     images
   }));
   
@@ -153,8 +103,7 @@ export default function ProfilePage() {
                   alt={profile.name}
                   width={250}
                   height={200}
-                  className="rounded transition-transform duration-300 hover:scale-105 shadow-lg"  
-                  className="rounded transition-transform duration-300 hover:scale-105 shadow-lg"  
+                  className="rounded transition-transform duration-300 hover:scale-105 shadow-lg"
                 />
               </div>
               
@@ -258,7 +207,7 @@ export default function ProfilePage() {
                               <img
                                 src={image.imageUrl}
                                 alt={`${group.title} image ${index + 1}`}
-                                className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                                className="w-full  transition-transform duration-300 hover:scale-105"
                               />
                             </div>
                             <div className="p-3 bg-white">
