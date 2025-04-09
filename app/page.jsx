@@ -1,7 +1,10 @@
 'use client';
+'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import axios from 'axios';
 
 export default function ProfilePage() {
@@ -52,7 +55,54 @@ export default function ProfilePage() {
     
     fetchImages();
   }, []);
+  // State for API images
+  const [apiImages, setApiImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Refs for each scroller
+  const scrollerRefs = useRef({});
+  
+  // State for each group's active image
+  const [activeIndices, setActiveIndices] = useState({});
 
+  // Fetch images from database
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get('/api/images');
+        setApiImages(response.data);
+        
+        // Initialize active indices for each category
+        const groupedImages = groupImagesByCategory(response.data);
+        const initialActiveIndices = Object.keys(groupedImages).reduce((acc, cat) => {
+          acc[cat] = 0;
+          return acc;
+        }, {});
+        
+        setActiveIndices(initialActiveIndices);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch images:', error);
+        setIsLoading(false);
+      }
+    };
+    
+    fetchImages();
+  }, []);
+
+  // Group images by category
+  const groupImagesByCategory = (imageList) => {
+    const grouped = {};
+    imageList.forEach(img => {
+      if (!grouped[img.category]) {
+        grouped[img.category] = [];
+      }
+      grouped[img.category].push(img);
+    });
+    return grouped;
+  };
+  
   // Group images by category
   const groupImagesByCategory = (imageList) => {
     const grouped = {};
@@ -67,9 +117,12 @@ export default function ProfilePage() {
   
   // Convert to array of groups
   const imageGroups = Object.entries(groupImagesByCategory(apiImages)).map(([title, images]) => ({
+  const imageGroups = Object.entries(groupImagesByCategory(apiImages)).map(([title, images]) => ({
     title,
     images
+    images
   }));
+  
   
   // Function to scroll to a specific image in a group
   const scrollToImage = (title, index) => {
@@ -101,6 +154,7 @@ export default function ProfilePage() {
                   width={250}
                   height={200}
                   className="rounded transition-transform duration-300 hover:scale-105 shadow-lg"  
+                  className="rounded transition-transform duration-300 hover:scale-105 shadow-lg"  
                 />
               </div>
               
@@ -120,6 +174,10 @@ export default function ProfilePage() {
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
                     500+ Students Mentored
                   </li>
+                   <li className="flex items-center">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                   Building Expert Advisor
+                  </li>
                 </ul>
               </div>
             </div>
@@ -127,11 +185,15 @@ export default function ProfilePage() {
             {/* Details (Right Side) */}
             <div className="flex-1">
               <h1 className="text-4xl font-bold text-gray-800 mb-2">{profile.name}</h1>
-              <h2 className="text-2xl font-medium text-blue-600 mb-6">{profile.title}</h2>
-              <p className="text-lg leading-relaxed text-gray-700 mb-8">{profile.bio}</p>
-              
+              <h2 className="text-2xl font-semibold text-blue-600 mb-6">Senior Forex Trader,<span className="text-red-600">Trainer</span>  and Building expert Advisor</h2>
+              <p className="text-lg leading-relaxed text-gray-700 mb-4">{profile.bio}</p>
+              <div>
+                <h3 className="text-xl font-medium text-gray-800 mb-3">Contact</h3>
+                <p className="text-gray-600 my-2">Email: {profile.contact.email}</p>
+                <p className="text-gray-600 my-2">Phone: {profile.contact.Phone}</p>
+              </div>
               <div className="mb-8">
-                <h3 className="text-xl font-medium text-gray-800 mb-3">Expertise</h3>
+                <h3 className="text-xl font-medium text-gray-800 mb-3 mt-4">Expertise</h3>
                 <div className="flex flex-wrap gap-2">
                   {profile.skills.map((skill, index) => (
                     <span key={index} className="bg-blue-50 text-blue-700 px-3 py-1.5 rounded-md text-sm">
@@ -150,14 +212,11 @@ export default function ProfilePage() {
                 </p>
               </div>
               
-              <div>
-                <h3 className="text-xl font-medium text-gray-800 mb-3">Contact</h3>
-                <p className="text-gray-600 my-2">Email: {profile.contact.email}</p>
-                <p className="text-gray-600 my-2">Phone: {profile.contact.Phone}</p>
-              </div>
+              
             </div>
           </section>
 
+          {/* API Image Gallery */}
           {/* API Image Gallery */}
           <section className="w-full bg-white rounded-xl shadow-md p-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Image Gallery</h2>
