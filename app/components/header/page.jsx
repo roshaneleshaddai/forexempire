@@ -29,7 +29,7 @@ export default function Header() {
       {/* Blinking Register Banner */}
       <div className="fixed top-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-blue-800 text-white text-center py-2 z-50">
         <p className="font-bold text-sm sm:text-base animate-pulse px-2">
-          Register Now for Forex Training - <span className="font-bold">10,000/- per trainee</span>
+          Register Now for Forex Training - <span className="font-extrabold">10,000/- per trainee</span>
         </p>
       </div>
 
